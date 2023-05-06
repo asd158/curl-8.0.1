@@ -21,12 +21,28 @@
 # SPDX-License-Identifier: curl
 #
 ###########################################################################
-find_path(MBEDTLS_INCLUDE_DIRS mbedtls/ssl.h)
-
-find_library(MBEDTLS_LIBRARY mbedtls)
-find_library(MBEDX509_LIBRARY mbedx509)
-find_library(MBEDCRYPTO_LIBRARY mbedcrypto)
-
+if (WIN32)
+    set(EXT_DIR win_x64/release)
+elseif (ANDROID)
+    set(EXT_DIR android/${ANDROID_ABI})
+elseif (APPLE)
+    if (IOS)
+        set(EXT_DIR ios)
+    else ()
+        set(EXT_DIR mac_x64)
+    endif ()
+else ()
+    set(EXT_DIR ubt22_x64)
+endif ()
+set(MBEDTLS_INCLUDE_DIRS ${CMAKE_SOURCE_DIR}/3rd/mbedtls-3.4.0/_bin/include)
+set(MBEDTLS_LIBRARY ${CMAKE_SOURCE_DIR}/3rd/mbedtls-3.4.0/_bin/lib/${EXT_DIR}/libmbedtls.a)
+set(MBEDX509_LIBRARY ${CMAKE_SOURCE_DIR}/3rd/mbedtls-3.4.0/_bin/lib/${EXT_DIR}/libmbedx509.a)
+set(MBEDCRYPTO_LIBRARY ${CMAKE_SOURCE_DIR}/3rd/mbedtls-3.4.0/_bin/lib/${EXT_DIR}/libmbedcrypto.a)
+if (WIN32)
+    set(MBEDTLS_LIBRARY ${CMAKE_SOURCE_DIR}/3rd/mbedtls-3.4.0/_bin/lib/${EXT_DIR}/mbedtls.lib)
+    set(MBEDX509_LIBRARY ${CMAKE_SOURCE_DIR}/3rd/mbedtls-3.4.0/_bin/lib/${EXT_DIR}/mbedx509.lib)
+    set(MBEDCRYPTO_LIBRARY ${CMAKE_SOURCE_DIR}/3rd/mbedtls-3.4.0/_bin/lib/${EXT_DIR}/mbedcrypto.lib)
+endif ()
 set(MBEDTLS_LIBRARIES "${MBEDTLS_LIBRARY}" "${MBEDX509_LIBRARY}" "${MBEDCRYPTO_LIBRARY}")
 
 include(FindPackageHandleStandardArgs)

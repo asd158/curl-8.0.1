@@ -1,0 +1,6 @@
+[submodule "3rd/zlib-1.2.13"]
+	path = 3rd/zlib-1.2.13
+	url = https://github.com/asd158/zlib-1.2.13
+[submodule "3rd/mbedtls-3.4.0"]
+	path = 3rd/mbedtls-3.4.0
+	url = https://github.com/asd158/mbedtls-3.4.0
