@@ -428,16 +428,8 @@ optional_dependency(ZLIB)
 if(ZLIB_FOUND)
   set(HAVE_LIBZ ON)
   set(USE_ZLIB ON)
-
-  # Depend on ZLIB via imported targets if supported by the running
-  # version of CMake.  This allows our dependents to get our dependencies
-  # transitively.
-  if(NOT CMAKE_VERSION VERSION_LESS 3.4)
-    list(APPEND CURL_LIBS ZLIB::ZLIB)
-  else()
-    list(APPEND CURL_LIBS ${ZLIB_LIBRARIES})
-    include_directories(${ZLIB_INCLUDE_DIRS})
-  endif()
+  list(APPEND CURL_LIBS ${ZLIB_LIBRARIES})
+  include_directories(${ZLIB_INCLUDE_DIRS})
   list(APPEND CMAKE_REQUIRED_INCLUDES ${ZLIB_INCLUDE_DIRS})
 endif()
 
